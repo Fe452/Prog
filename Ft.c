@@ -59,11 +59,15 @@ void adicionar(Cliente *cliente, Camiseta *camiseta, Compra *compra, int escolha
             cliente[*n_cl].id=*n_cl;
             printf("Nome: ");
             fgets(cliente[*n_cl].nome, sizeof(cliente[*n_cl].nome), stdin);
+            cliente[*n_cl].nome[strcspn(cliente[*n_cl].nome, "\n")] = '\0';
             fgets(cliente[*n_cl].nome, sizeof(cliente[*n_cl].nome), stdin);
+            cliente[*n_cl].nome[strcspn(cliente[*n_cl].nome, "\n")] = '\0';
             printf("Telefone: ");
             fgets(cliente[*n_cl].telefone, sizeof(cliente[*n_cl].telefone), stdin);
+            cliente[*n_cl].nome[strcspn(cliente[*n_cl].nome, "\n")] = '\0';
             printf("Endereco: ");
             fgets(cliente[*n_cl].endereco, sizeof(cliente[*n_cl].endereco), stdin);
+            cliente[*n_cl].nome[strcspn(cliente[*n_cl].nome, "\n")] = '\0';
             /*testes de funcionameto prévio:
             printf("Nome cliente %i : %s", *n_cl, cliente[*n_cl].nome);
             printf("Telefone cliente %i : %s", *n_cl, cliente[*n_cl].telefone);
@@ -100,30 +104,29 @@ void atualizar(Cliente *cliente, Camiseta *camiseta, Compra *compra, int escolha
 }
 
 void listar(Cliente *cliente, Camiseta *camiseta, Compra *compra, int escolha, int *n_cl, int *n_cm, int *n_cp) {
-    switch (escolha)
-    {
+    switch (escolha){
         case 4:
-            if (*n_cl == 0) {
+            // se não tiver cliente
+            if (*n_cl == 0){
                 printf("\nNenhum cliente cadastrado.\n");
                 return;
             }
-
-            for (int i = 0; i < *n_cl - 1; i++) {
-                for (int j = i + 1; j < *n_cl; j++) {
-                    if (strcmp(cliente[i].nome, cliente[j].nome) > 0) {
+            // isso aqui vai ordernar os nomes em ordem alfabetica (bubble sort)
+            for (int i = 0; i < *n_cl - 1; i++){
+                for (int j = i + 1; j < *n_cl; j++){
+                    if (strcmp(cliente[i].nome, cliente[j].nome) > 0){
                         Cliente temp = cliente[i];
                         cliente[i] = cliente[j];
                         cliente[j] = temp;
                     }
                 }
             }
-
+            // mostra a lista
             printf("\n<===Lista de Clientes===>\n");
             for (int i = 0; i < *n_cl; i++) {
                 cliente[i].nome[strcspn(cliente[i].nome, "\n")] = '\0';
                 
-                printf("ID: %d | Nome: %s | Telefone: %s | Endereco: %s\n", 
-                    cliente[i].id, cliente[i].nome, cliente[i].telefone, cliente[i].endereco);
+                printf("ID: %d | Nome: %s | Telefone: %s | Endereco: %s\n", cliente[i].id, cliente[i].nome, cliente[i].telefone, cliente[i].endereco);
             }
             break;
         
@@ -134,8 +137,55 @@ void listar(Cliente *cliente, Camiseta *camiseta, Compra *compra, int escolha, i
 }
 
 void buscar(Cliente *cliente, Camiseta *camiseta, Compra *compra, int escolha, int *n_cl, int *n_cm, int *n_cp) {
+    char clienteBusca[30];
+    int buscado = 0;
 
+    
+    switch (escolha){
+    case 5:
+        // se não tiver cliente
+        if (*n_cl == 0){
+            printf("\nNenhum cliente cadastrado.\n");
+            return;
+        }
+        // aqui da pra buscar o nome
+        printf("Digite o nome que voce deseja buscar:\n");
+        while (getchar() != '\n');
+        fgets(clienteBusca, sizeof(clienteBusca), stdin);
+        clienteBusca[strcspn(clienteBusca, "\n")] = '\0';
+
+        // aqui mostra o nome buscado
+        for (int i = 0; i < *n_cl; i++){
+            if (strcmp(cliente[i].nome, clienteBusca) == 0){
+                printf("ID: %d | Nome: %s | Telefone: %s | Endereco: %s\n", cliente[i].id, cliente[i].nome, cliente[i].telefone, cliente[i].endereco);
+                buscado = 1;
+            }
+        }
+        // mano aqui eu to querendo fazer com que ja chame a função direto, alguma ideia?
+        if (buscado){
+            printf("\nOque deseja fazer?\n1 - Remover\n2 - Atualizar\n3 - Voltar\n");
+            int escolha_3, *mudar;
+            scanf("%d", &escolha_3);
+            while (getchar() != '\n');
+        }else{
+            printf("Cliente nao encontrado\n");
+        }
+        break;
+    
+    default:
+        break;
+    }
 }
+
+/*int Mexer(int escolha, char *mexer) {
+    // Isso aqui eu acho que vai dar pra mexer nos nomes kkk
+    switch(escolha){
+        case 1 : strcpy(mexer, "Remover"); return 1;
+        case 2 : strcpy(mexer, "Atualizar"); return 2;
+        case 3 : strcpy(mexer, "Sair"); return 3;
+    }
+    return 0;
+}*/
 
 int main() {
     //ent, tem q ver esse tanto de vari´´avel, pq eu acho q deve ficar melhor se diminuir, mas n sei
@@ -171,9 +221,9 @@ int main() {
                     break;*/
                 case 4: listar(cliente, camiseta, compra, escolha_2, n1, n2, n3);
                     break;
-                /*case 5 : buscar(cliente, camiseta, compra);
+                case 5 : buscar(cliente, camiseta, compra, escolha_2, n1, n2, n3);
                     break;
-                case 6: printf("Voltando\n");
+                /*case 6: printf("Voltando\n");
                     break;*/
                 default: printf("Por favor, ecolha um numero dentre as opcoes\n");
             }
