@@ -88,11 +88,7 @@ void adicionar(Cliente *cliente, Camiseta *camiseta, Compra *compra, int escolha
             n_cp++;
             break;
         
-    }
-        
-        
-    
-    
+    }   
 }
 
 void remover(Cliente *cliente, Camiseta *camiseta, Compra *compra, int escolha, int *n_cl, int *n_cm, int *n_cp) {
@@ -167,6 +163,22 @@ void buscar(Cliente *cliente, Camiseta *camiseta, Compra *compra, int escolha, i
             int escolha_3, *mudar;
             scanf("%d", &escolha_3);
             while (getchar() != '\n');
+
+            /*if (escolha_3 == 1)
+            {
+                Remover();
+            }else if (escolha_3 == 2)
+            {
+                Atualizar();
+            }else if (escolha_3 == 3)
+            {
+                return;
+            }else{
+                printf("Digite um valor válido!");
+            }*/
+            
+            
+            
         }else{
             printf("Cliente nao encontrado\n");
         }
