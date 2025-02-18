@@ -6,7 +6,7 @@ const int TAM = 10;
 
 typedef struct Cliente{
     int id;
-    char nome[20], telefone[13], endereco[30];
+    char nome[20], telefone[16], endereco[50];
 }Cliente;
 
 typedef struct Camiseta{
@@ -64,10 +64,10 @@ void adicionar(Cliente *cliente, Camiseta *camiseta, Compra *compra, int escolha
             cliente[*n_cl].nome[strcspn(cliente[*n_cl].nome, "\n")] = '\0';
             printf("Telefone: ");
             fgets(cliente[*n_cl].telefone, sizeof(cliente[*n_cl].telefone), stdin);
-            cliente[*n_cl].nome[strcspn(cliente[*n_cl].nome, "\n")] = '\0';
+            cliente[*n_cl].telefone[strcspn(cliente[*n_cl].telefone, "\n")] = '\0';
             printf("Endereco: ");
             fgets(cliente[*n_cl].endereco, sizeof(cliente[*n_cl].endereco), stdin);
-            cliente[*n_cl].nome[strcspn(cliente[*n_cl].nome, "\n")] = '\0';
+            cliente[*n_cl].endereco[strcspn(cliente[*n_cl].endereco, "\n")] = '\0';
             /*testes de funcionameto prévio:
             printf("Nome cliente %i : %s", *n_cl, cliente[*n_cl].nome);
             printf("Telefone cliente %i : %s", *n_cl, cliente[*n_cl].telefone);
@@ -92,11 +92,40 @@ void adicionar(Cliente *cliente, Camiseta *camiseta, Compra *compra, int escolha
 }
 
 void remover(Cliente *cliente, Camiseta *camiseta, Compra *compra, int escolha, int *n_cl, int *n_cm, int *n_cp) {
+    char clienteBusca[30];
 
+    switch (escolha)
+    {
+    case 6:
+        // se não tiver cliente
+        if (*n_cl == 0){
+            printf("\nNenhum cliente cadastrado.\n");
+            return;
+        }
+        // aqui da pra buscar o nome
+        printf("Qual cliente deseja remover?\n");
+        while (getchar() != '\n');
+        fgets(clienteBusca, sizeof(clienteBusca), stdin);
+        clienteBusca[strcspn(clienteBusca, "\n")] = '\0';
+
+        for (int i = 0; i < *n_cl; i++)
+        {
+            if (strcmp(cliente[i].nome, clienteBusca) == 0)
+            {
+                
+            }
+            
+        }
+        
+        break;
+    
+    default:
+        break;
+    }
 }
 
 void atualizar(Cliente *cliente, Camiseta *camiseta, Compra *compra, int escolha, int *n_cl, int *n_cm, int *n_cp) {
-
+    printf("boa");
 }
 
 void listar(Cliente *cliente, Camiseta *camiseta, Compra *compra, int escolha, int *n_cl, int *n_cm, int *n_cp) {
@@ -135,6 +164,7 @@ void listar(Cliente *cliente, Camiseta *camiseta, Compra *compra, int escolha, i
 void buscar(Cliente *cliente, Camiseta *camiseta, Compra *compra, int escolha, int *n_cl, int *n_cm, int *n_cp) {
     char clienteBusca[30];
     int buscado = 0;
+    int escolha_3;
 
     
     switch (escolha){
@@ -160,8 +190,7 @@ void buscar(Cliente *cliente, Camiseta *camiseta, Compra *compra, int escolha, i
         // mano aqui eu to querendo fazer com que ja chame a função direto, alguma ideia?
         if (buscado){
             printf("\nOque deseja fazer?\n1 - Remover\n2 - Atualizar\n3 - Voltar\n");
-            int escolha_3, *mudar;
-            scanf("%d", &escolha_3);
+            escolha_3 = malloc(TAM*sizeof(int));
             while (getchar() != '\n');
 
             /*if (escolha_3 == 1)
@@ -200,8 +229,8 @@ void buscar(Cliente *cliente, Camiseta *camiseta, Compra *compra, int escolha, i
 }*/
 
 int main() {
-    //ent, tem q ver esse tanto de vari´´avel, pq eu acho q deve ficar melhor se diminuir, mas n sei
-    int escolha_1, escolha_2, n_cl=0, n_cm=0, n_cp=0;
+    //ent, tem q ver esse tanto de varíavel, pq eu acho q deve ficar melhor se diminuir, mas n sei
+    int escolha_1, escolha_2, escolha_3, n_cl=0, n_cm=0, n_cp=0;
     int *n1, *n2, *n3;
     n1=&n_cl;
     n2=&n_cm;
@@ -234,6 +263,17 @@ int main() {
                 case 4: listar(cliente, camiseta, compra, escolha_2, n1, n2, n3);
                     break;
                 case 5 : buscar(cliente, camiseta, compra, escolha_2, n1, n2, n3);
+                    {
+                        if (escolha_3 == 1)
+                        {
+                            remover(cliente, camiseta, compra, escolha_2, n1, n2, n3);
+                        }
+                        if (escolha_3 == 2)
+                        {
+                            atualizar(cliente, camiseta, compra, escolha_2, n1, n2, n3);
+                        }
+                        
+                    }
                     break;
                 /*case 6: printf("Voltando\n");
                     break;*/
@@ -241,5 +281,7 @@ int main() {
             }
         }while(escolha_2 != 6);
     }while(escolha_1 != 4);
+    
+    
     return 0;
 }
