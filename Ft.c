@@ -2,42 +2,50 @@
 #include <stdlib.h>
 #include <string.h>
 
-const int TAM = 10;
+const int TAM = 10;     // eu acho melhor trocar por #define TAM
 
 typedef struct Cliente{
     int id;
     char nome[100], telefone[16], endereco[50];
 }Cliente;
 
-typedef struct Camiseta{
+typedef struct {
     int id;
-    char modelo[10], tamanho[2];
+    char modelo[100], tamanho[5];
     float preco;
 }Camiseta;
 
 typedef struct Compra{
     int id;
     Cliente comprador;
-    Camiseta *produtos;
+    Camiseta produtos[10];
     float total;
 }Compra;
-
-int tabela() {
-    //na real é o primeiro menu, tem q rever os nomes, mas nesse tem a escolha pra q dados vc quer mexer
+//pronto
+int menu_1() {
+    //na real é o primeiro menu_2_2, tem q rever os nomes, mas nesse tem a escolha pra q dados vc quer mexer
     int escolha;
     printf("\nNo que deseja mexer?\n1 - Clientes\n2 - Camisetas\n3 - Compras\n4 - Sair\n");
     scanf("%i", &escolha);
     return escolha;
 }
-
-int menu() {
+//pronto
+int menu_2() {
     // aí esse é o segundo menu, q tem as ações q vc pode fazer
     int escolha;
-    printf("\nBem vindo, o que deseja fazer?\n1 - Adicionar\n2 - Remover\n3 - Atualizar\n4 - Listar\n5 - Buscar\n6 - Voltar\n");
+    printf("\nBem vindo, o que deseja fazer?\n1 - Adicionar\n2 - Listar\n3 - Buscar\n4 - Voltar\n");
     scanf("%i", &escolha);
     return escolha;
 }
-
+//FAZ LOGO
+int menu_3() {
+    // aí esse é o segundo menu, q tem as ações q vc pode fazer
+    int escolha;
+    printf("\nBem vindo, o que deseja fazer?\n1 - Adicionar\n2 - Listar\n3 - Buscar\n4 - Voltar\n");
+    scanf("%i", &escolha);
+    return escolha;
+}
+//pronto
 void identidade(int escolha, char *tipo){
     // Esse daqui é só pra ter título mostrando em q tipo de dado vc tá mexendo
     switch(escolha){
@@ -49,99 +57,12 @@ void identidade(int escolha, char *tipo){
             break;
     }
 }
-
-void ordenar(Cliente *cliente, Camiseta *camiseta, Compra *compra, int escolha, int *n_cl, int *n_cm, int *n_cp) {
-    
-}
-void adicionar(Cliente *cliente, Camiseta *camiseta, Compra *compra, int escolha, int *n_cl, int *n_cm, int *n_cp) {
-    switch(escolha){
-        case 1 : 
-            cliente[*n_cl].id=*n_cl;
-            printf("Nome: ");
-            fgets(cliente[*n_cl].nome, sizeof(cliente[*n_cl].nome), stdin);
-            cliente[*n_cl].nome[strcspn(cliente[*n_cl].nome, "\n")] = '\0';
-            fgets(cliente[*n_cl].nome, sizeof(cliente[*n_cl].nome), stdin);
-            cliente[*n_cl].nome[strcspn(cliente[*n_cl].nome, "\n")] = '\0';
-            printf("Telefone: ");
-            fgets(cliente[*n_cl].telefone, sizeof(cliente[*n_cl].telefone), stdin);
-            cliente[*n_cl].telefone[strcspn(cliente[*n_cl].telefone, "\n")] = '\0';
-            printf("Endereco: ");
-            fgets(cliente[*n_cl].endereco, sizeof(cliente[*n_cl].endereco), stdin);
-            cliente[*n_cl].endereco[strcspn(cliente[*n_cl].endereco, "\n")] = '\0';
-            /*testes de funcionameto prévio:
-            printf("Nome cliente %i : %s", *n_cl, cliente[*n_cl].nome);
-            printf("Telefone cliente %i : %s", *n_cl, cliente[*n_cl].telefone);
-            printf("Endereco cliente %i : %s", *n_cl, cliente[*n_cl].endereco);*/
-            (*n_cl)++;
-            break;
-        case 2 :
-            printf("Nome: ");
-            fgets(cliente[*n_cl].nome, sizeof(cliente[*n_cl].nome), stdin);
-            fgets(cliente[*n_cl].nome, sizeof(cliente[*n_cl].nome), stdin);
-            printf("Telefone: ");
-            fgets(cliente[*n_cl].telefone, sizeof(cliente[*n_cl].telefone), stdin);
-            printf("Endereco: ");
-            fgets(cliente[*n_cl].endereco, sizeof(cliente[*n_cl].endereco), stdin); 
-            n_cm++;
-            break;
-        case 3 : 
-            n_cp++;
-            break;
-        
-    }   
-}
-
-void remover(Cliente *cliente, Camiseta *camiseta, Compra *compra, int escolha, int *n_cl, int *n_cm, int *n_cp, char *buscaCliente) {
-
-    for (int i = 0; i < *n_cl; i++)
-    {
-        if (strcmp(cliente[i].nome, buscaCliente) == 0) {
-            printf("\nCliente ''%s'' removido\n", cliente[i].nome);
-            for (int j = i; j < *n_cl - 1; j++) {
-                cliente[j] = cliente[j + 1];  // vai deslocar os elementos pra tirar o espaço vazio
-            }
-            (*n_cl)--;
-            return;
-        }
-    } 
-}
-
-void atualizar(Cliente *cliente, Camiseta *camiseta, Compra *compra, int escolha, int *n_cl, int *n_cm, int *n_cp, char *buscaCliente) {
-    for (int i = 0; i < *n_cl; i++)
-    {
-        if (strcmp(cliente[i].nome, buscaCliente) == 0)
-        {
-            printf("\nAtualizando o cliente ''%s''\n", buscaCliente);
-            printf("Atualizando o nome: ");
-            fgets(cliente[i].nome, sizeof(cliente[i].nome), stdin);
-            cliente[i].nome[strcspn(cliente[i].nome, "\n")] = '\0';
-
-            printf("\nAtualizando o telefone: ");
-            fgets(cliente[i].telefone, sizeof(cliente[i].telefone), stdin);
-            cliente[i].telefone[strcspn(cliente[i].telefone, "\n")] = '\0';
-
-            printf("\nAtualizando o endereco: ");
-            fgets(cliente[i].endereco, sizeof(cliente[i].endereco), stdin);
-            cliente[i].endereco[strspn(cliente[i].endereco, "\n")] = '\0';
-
-            printf("\nCliente atualizado!");
-            return;
-        }
-    }
-    printf("Cliente não encontrado para atualização.\n");
-}
-
-void listar(Cliente *cliente, Camiseta *camiseta, Compra *compra, int escolha, int *n_cl, int *n_cm, int *n_cp) {
-    switch (escolha){
-        case 4:
-            // se não tiver cliente
-            if (*n_cl == 0){
-                printf("\nNenhum cliente cadastrado.\n");
-                return;
-            }
-            // isso aqui vai ordernar os nomes em ordem alfabetica (bubble sort)
-            for (int i = 0; i < *n_cl - 1; i++){
-                for (int j = i + 1; j < *n_cl; j++){
+//pronto
+void ordenar(Cliente *cliente, Camiseta *camiseta, Compra *compra, int escolha, int *n_cliente, int *n_camiseta, int *n_compra) {
+    switch(escolha){// isso aqui vai ordernar os nomes em ordem alfabetica (bubble sort)
+        case 1:
+            for (int i = 0; i < *n_cliente - 1; i++){
+                for (int j = i + 1; j < *n_cliente; j++){
                     if (strcmp(cliente[i].nome, cliente[j].nome) > 0){
                         Cliente temp = cliente[i];
                         cliente[i] = cliente[j];
@@ -149,12 +70,175 @@ void listar(Cliente *cliente, Camiseta *camiseta, Compra *compra, int escolha, i
                     }
                 }
             }
+            break;
+        case 2:
+            for (int i = 0; i < *n_camiseta - 1; i++){
+                for (int j = i + 1; j < *n_camiseta; j++){
+                    if (strcmp(camiseta[i].modelo, camiseta[j].modelo) > 0){
+                        Camiseta temp = camiseta[i];
+                        camiseta[i] = camiseta[j];
+                        camiseta[j] = temp;
+                    }
+                }
+            }
+            break;
+    }
+    
+}
+
+void adicionar(Cliente *cliente, Camiseta *camiseta, Compra *compra, int escolha, int *n_cliente, int *n_camiseta, int *n_compra) {
+    switch(escolha){
+        case 1 : 
+            cliente[*n_cliente].id=*n_cliente;
+            printf("Nome: ");
+            fgets(cliente[*n_cliente].nome, sizeof(cliente[*n_cliente].nome), stdin);
+            cliente[*n_cliente].nome[strcspn(cliente[*n_cliente].nome, "\n")] = '\0';
+            fgets(cliente[*n_cliente].nome, sizeof(cliente[*n_cliente].nome), stdin);
+            cliente[*n_cliente].nome[strcspn(cliente[*n_cliente].nome, "\n")] = '\0';
+            printf("Telefone: ");
+            fgets(cliente[*n_cliente].telefone, sizeof(cliente[*n_cliente].telefone), stdin);
+            cliente[*n_cliente].telefone[strcspn(cliente[*n_cliente].telefone, "\n")] = '\0';
+            printf("Endereco: ");
+            fgets(cliente[*n_cliente].endereco, sizeof(cliente[*n_cliente].endereco), stdin);
+            cliente[*n_cliente].endereco[strcspn(cliente[*n_cliente].endereco, "\n")] = '\0';
+            /*testes de funcionameto prévio:
+            printf("Nome cliente %i : %s", *n_cliente, cliente[*n_cliente].nome);
+            printf("Telefone cliente %i : %s", *n_cliente, cliente[*n_cliente].telefone);
+            printf("Endereco cliente %i : %s", *n_cliente, cliente[*n_cliente].endereco);*/
+            (*n_cliente)++;
+            ordenar(cliente, camiseta, compra, escolha, n_cliente, n_camiseta, n_compra);
+            break;
+        case 2 :
+            camiseta[*n_camiseta].id=*n_camiseta;
+            printf("Modelo: ");
+            fgets(camiseta[*n_camiseta].modelo, sizeof(camiseta[*n_camiseta].modelo), stdin);
+            fgets(camiseta[*n_camiseta].modelo, sizeof(camiseta[*n_camiseta].modelo), stdin);
+            printf("Tamanho: ");
+            fgets(camiseta[*n_camiseta].tamanho, sizeof(camiseta[*n_camiseta].tamanho), stdin);
+            camiseta[*n_camiseta].tamanho[strcspn(camiseta[*n_camiseta].tamanho, "\n")] = '\0';
+            printf("Preco: ");
+            scanf("%f", &camiseta[*n_camiseta].preco); 
+            (*n_camiseta)++;
+            ordenar(cliente, camiseta, compra, escolha, n_cliente, n_camiseta, n_compra);
+            break;
+        case 3 : 
+            compra[*n_compra].id=*n_compra;
+            printf("ID ou nome do cliente: ");
+            //compra[*n_compra].comprador = 
+            (*n_compra)++;
+            break;
+        
+    }   
+}
+
+void remover(Cliente *cliente, Camiseta *camiseta, Compra *compra, int escolha, int *n_cliente, int *n_camiseta, int *n_compra, char *buscaCliente) {
+    switch (escolha){
+        case 1: 
+            for (int i = 0; i < *n_cliente; i++)
+            {
+                if (strcmp(cliente[i].nome, buscaCliente) == 0) {
+                    printf("\nCliente ''%s'' removido\n", cliente[i].nome);
+                    for(int k=0; k<*n_cliente; k++){
+                        if(cliente[k].id > cliente[i].id){
+                            cliente[k].id--;
+                        }
+                    }
+                    for (int j = i; j < *n_cliente - 1; j++) {
+                        cliente[j] = cliente[j + 1];  // vai deslocar os elementos pra tirar o espaço vazio
+                    }
+                    (*n_cliente)--;
+                    return;
+                }
+            }
+            break;
+        case 2:
+            for (int i = 0; i < *n_camiseta; i++)
+            {
+                if (strcmp(camiseta[i].modelo, buscaCliente) == 0) {
+                    printf("\nCamiseta ''%s'' removido\n", camiseta[i].modelo);
+                    for(int k=0; k<*n_camiseta; k++){
+                        if(camiseta[k].id > camiseta[i].id){
+                            cliente[k].id--;
+                        }
+                    }
+                    for (int j = i; j < *n_camiseta - 1; j++) {
+                        camiseta[j] = camiseta[j + 1];  // vai deslocar os elementos pra tirar o espaço vazio
+                    }
+                    (*n_camiseta)--;
+                    return;
+                }
+            }
+            break;
+        case 3:
+            break;
+
+    }
+    
+}
+
+void atualizar(Cliente *cliente, Camiseta *camiseta, Compra *compra, int escolha, int *n_cliente, int *n_camiseta, int *n_compra, char *buscaCliente) {
+    switch(escolha){
+        case 1:
+            for (int i = 0; i < *n_cliente; i++)
+            {
+                if (strcmp(cliente[i].nome, buscaCliente) == 0)
+                {
+                    printf("\nAtualizando o cliente ''%s''\n", buscaCliente);
+                    printf("Atualizando o nome: ");
+                    fgets(cliente[i].nome, sizeof(cliente[i].nome), stdin);
+                    cliente[i].nome[strcspn(cliente[i].nome, "\n")] = '\0';
+
+                    printf("\nAtualizando o telefone: ");
+                    fgets(cliente[i].telefone, sizeof(cliente[i].telefone), stdin);
+                    cliente[i].telefone[strcspn(cliente[i].telefone, "\n")] = '\0';
+
+                    printf("\nAtualizando o endereco: ");
+                    fgets(cliente[i].endereco, sizeof(cliente[i].endereco), stdin);
+                    cliente[i].endereco[strspn(cliente[i].endereco, "\n")] = '\0';
+
+                    printf("\nCliente atualizado!");
+                    return;
+                }
+            }
+            printf("Cliente não encontrado para atualização.\n");
+            break;
+        case 2:
+            break;
+        case 3:
+            break;
+    }
+}
+
+void listar(Cliente *cliente, Camiseta *camiseta, Compra *compra, int escolha, int *n_cliente, int *n_camiseta, int *n_compra) {
+    switch (escolha){
+        case 1:
+            // se não tiver cliente
+            if (*n_cliente == 0){
+                printf("\nNenhum cliente cadastrado.\n");
+                return;
+            }
+            
             // mostra a lista
             printf("\n<===Lista de Clientes===>\n");
-            for (int i = 0; i < *n_cl; i++) {
+            for (int i = 0; i < *n_cliente; i++) {
                 cliente[i].nome[strcspn(cliente[i].nome, "\n")] = '\0';
                 
                 printf("ID: %d | Nome: %s | Telefone: %s | Endereco: %s\n", cliente[i].id, cliente[i].nome, cliente[i].telefone, cliente[i].endereco);
+            }
+            break;
+        case 2:
+            // se não tiver cliente
+            if (*n_camiseta == 0){
+                printf("\nNenhuma camiseta cadastrada.\n");
+                return;
+            }
+            
+            // mostra a lista
+            printf("\n<===Lista de Camisetas===>\n");
+            for (int i = 0; i < *n_camiseta; i++) {
+                camiseta[i].modelo[strcspn(camiseta[i].modelo, "\n")] = '\0';
+                
+                printf("ID: %d | Modelo: %s | Tamanho: %s | Preco: %.2f\n", camiseta[i].id, camiseta[i].modelo, camiseta[i].tamanho, camiseta[i].preco);
             }
             break;
         
@@ -164,12 +248,12 @@ void listar(Cliente *cliente, Camiseta *camiseta, Compra *compra, int escolha, i
     }
 }
 
-void buscar(Cliente *cliente, Camiseta *camiseta, Compra *compra, int escolha,int *n_cl, int *n_cm, int *n_cp, char *buscaCliente) {
+void buscar(Cliente *cliente, Camiseta *camiseta, Compra *compra, int escolha,int *n_cliente, int *n_camiseta, int *n_compra, char *buscaCliente) {
     int buscado = 0;
     int escolha_3;
 
     // se não tiver cliente
-    if (*n_cl == 0){
+    if (*n_cliente == 0){
         printf("\nNenhum cliente cadastrado.\n");
         return;
     }      
@@ -180,7 +264,7 @@ void buscar(Cliente *cliente, Camiseta *camiseta, Compra *compra, int escolha,in
         buscaCliente[strcspn(buscaCliente, "\n")] = '\0'; // tira o \n do final
 
         // aqui mostra o nome buscado
-        for (int i = 0; i < *n_cl; i++){
+        for (int i = 0; i < *n_cliente; i++){
             if (strcmp(cliente[i].nome, buscaCliente) == 0)// compara com os nomes ja digitados
             {
                 printf("ID: %d | Nome: %s | Telefone: %s | Endereco: %s\n", cliente[i].id, cliente[i].nome, cliente[i].telefone, cliente[i].endereco);
@@ -195,10 +279,10 @@ void buscar(Cliente *cliente, Camiseta *camiseta, Compra *compra, int escolha,in
 
             if (escolha_3 == 1)
             {
-                remover(cliente, camiseta, compra, escolha, n_cl, n_cm, n_cp, buscaCliente); // chama função remover
+                remover(cliente, camiseta, compra, escolha, n_cliente, n_camiseta, n_compra, buscaCliente); // chama função remover
             }else if (escolha_3 == 2)
             {
-                atualizar(cliente, camiseta, compra, escolha, n_cl, n_cm, n_cp, buscaCliente); // chama função atualizar
+                atualizar(cliente, camiseta, compra, escolha, n_cliente, n_camiseta, n_compra, buscaCliente); // chama função atualizar
             }else if (escolha_3 == 3)
             {
                 return;
@@ -225,46 +309,43 @@ void buscar(Cliente *cliente, Camiseta *camiseta, Compra *compra, int escolha,in
 
 int main() {
     //ent, tem q ver esse tanto de varíavel, pq eu acho q deve ficar melhor se diminuir, mas n sei
-    int escolha_1, escolha_2, escolha_3, n_cl=0, n_cm=0, n_cp=0;
+    int escolha_1, escolha_2, escolha_3, n_cliente=0, n_camiseta=0, n_compra=0;
     int *n1, *n2, *n3;
     char busca[30];
-    n1=&n_cl;
-    n2=&n_cm;
-    n3=&n_cp;
+    n1=&n_cliente;
+    n2=&n_camiseta;
+    n3=&n_compra;
 
     char *tipo;
     tipo=malloc(10*sizeof(char));
     Cliente *cliente;
     cliente=malloc(TAM*sizeof(Cliente));
+    if(cliente==NULL) return 1;
     Camiseta *camiseta;
     camiseta=malloc(TAM*sizeof(Camiseta));
+    if(camiseta==NULL) return 1;
     Compra *compra;
     compra=malloc(TAM*sizeof(Compra));
+    if(compra==NULL) return 1;
 
     do{
-        escolha_1 = tabela();
+        escolha_1 = menu_1();
         if(escolha_1 == 4) break;
         identidade(escolha_1, tipo);
         do{
             printf("\n<===%s===>", tipo); 
-            escolha_2 = menu();
-            if(escolha_2 == 6) break;
+            escolha_2 = menu_2();
+            if(escolha_2 == 4) break;
             switch(escolha_2){
                 case 1: adicionar(cliente, camiseta, compra, escolha_1, n1, n2, n3);
                     break;
-                /*case 2: remover(cliente, camiseta, compra);
+                case 2: listar(cliente, camiseta, compra, escolha_1, n1, n2, n3);
                     break;
-                case 3: atualizar(cliente, camiseta, compra);
-                    break;*/
-                case 4: listar(cliente, camiseta, compra, escolha_2, n1, n2, n3);
+                case 3 : buscar(cliente, camiseta, compra, escolha_1, n1, n2, n3, busca);
                     break;
-                case 5 : buscar(cliente, camiseta, compra, escolha_2, n1, n2, n3, busca);
-                    break;
-                /*case 6: printf("Voltando\n");
-                    break;*/
                 default: printf("Por favor, ecolha um numero dentre as opcoes\n");
             }
-        }while(escolha_2 != 6);
+        }while(escolha_2 != 4);
     }while(escolha_1 != 4);
     
     
