@@ -1,0 +1,9 @@
+<=== Lista de Clientes ===>
+ID: 0 | Nome: Augusto | Telefone: 67890987 | Endereco: Rua 2
+
+<=== Lista de Camisetas ===>
+ID: 0 | Modelo: ryfit | Tamanho: G | Preco: 90.00
+ID: 1 | Modelo: doisfit | Tamanho: GG | Preco: 102.00
+
+<=== Lista de Compras ===>
+ID: 0 | Comprador: Augusto | Total: 282.00 | Produtos: 1: ryfit 2: ryfit 3: doisfit 
